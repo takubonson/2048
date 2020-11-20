@@ -1,14 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define SIZE 4
 int random_in_range(int);
+void print_board(int [SIZE][SIZE]);
+void put_random_2_in(int [SIZE][SIZE]);
+void start_game(int [SIZE][SIZE]);
+void move_up(int [SIZE][SIZE]);
+void move_down(int [SIZE][SIZE]);
+void move_left(int [SIZE][SIZE]);
+void move_right(int [SIZE][SIZE]);
+
+
+int main (int argc, char *argv[]) {
+    int board[SIZE][SIZE] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+    printf("Press any key to conitnue\n");
+    int c;
+    system("clear");
+    printf("Press '.' to close\r\n");
+    start_game(board);
+    print_board(board);
+
+    system("/bin/stty raw onlcr");  // enterを押さなくてもキー入力を受け付けるようになる
+
+    while((c = getchar()) != '.') {
+        system("clear");
+        printf("Press '.' to close\r\n");
+        if (c == 'A'){
+            move_up(board);
+            put_random_2_in(board);
+        }else if (c == 'D')
+        {
+            move_left(board);
+            put_random_2_in(board);
+        }else if (c == 'B')
+        {
+            move_down(board);
+            put_random_2_in(board);
+        }else if (c == 'C')
+        {
+            move_right(board);
+            put_random_2_in(board);
+        }
+        print_board(board);
+        printf("You pressed '%c'\r\n", c);
+    }
+
+    system("/bin/stty cooked");  // 後始末
+
+    return 0;
+}
+
+int random_in_range(int rand_max){
+    return rand()%rand_max;
+}
 
 void print_board(int board[SIZE][SIZE]) {
     for (int j=0; j<SIZE; j++){
         for (int i=0; i<SIZE; i++){
-            printf("%5d", board[j][i]);
+            if (board[j][i]!=0){
+                int color = (((int)log2(board[j][i]))%6)+1;
+                printf("\x1b[3%dm", color);//色をつける
+                printf("%5d", board[j][i]);
+                printf("\x1b[39m");//色をデフォルトに
+                printf("|");
+            }
+            else
+            {
+                printf("     ");
+                printf("|");
+            }
         }
-        printf("\r\n\r\n");
+        printf("\r\n-----");
+        printf("|-----");
+        printf("|-----");
+        printf("|-----|");
+        printf("\r\n");
     }
 }
 
@@ -22,6 +89,11 @@ void put_random_2_in(int board[SIZE][SIZE]){
             flag = 1;
         }
     }
+}
+
+void start_game(int board[SIZE][SIZE]){
+    put_random_2_in(board);
+    put_random_2_in(board);
 }
 
 void move_up(int board[SIZE][SIZE]){
@@ -115,47 +187,4 @@ void move_right(int board[SIZE][SIZE]){
             }
         }
     }
-}
-
-
-int main (int argc, char *argv[]) {
-    int board[SIZE][SIZE] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-    printf("Press any key to conitnue\n");
-    int c;
-
-    system("/bin/stty raw onlcr");  // enterを押さなくてもキー入力を受け付けるようになる
-
-    while((c = getchar()) != '.') {
-        system("clear");
-        printf("Press '.' to close\r\n");
-        // int a = random_in_range(SIZE);
-        // int b = random_in_range(SIZE);
-        // board[a][b] = '2';
-        if (c=='i'){
-            move_up(board);
-        }else if (c == 'j')
-        {
-            move_left(board);
-        }else if (c == 'm')
-        {
-            move_down(board);
-        }else if (c == 'k')
-        {
-            move_right(board);
-        }
-        
-        
-        
-        put_random_2_in(board);
-        print_board(board);
-        printf("You pressed '%c'\r\n", c);
-    }
-
-    system("/bin/stty cooked");  // 後始末
-
-    return 0;
-}
-
-int random_in_range(int rand_max){
-    return rand()%rand_max;
 }
