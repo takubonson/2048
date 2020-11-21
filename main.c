@@ -16,8 +16,8 @@ void move_right(int [SIZE][SIZE], int *);
 int main (int argc, char *argv[]) {
     int board[SIZE][SIZE] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
     int score = 0;
-    printf("Press any key to start the game\n");
     int c;
+    
     system("clear");
     printf("Press '.' to close\r\n");
     start_game(board);
