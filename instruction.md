@@ -7,8 +7,8 @@
 ## random_in_range関数
 
 引数rand_maxを受け取り、0以上rand_max未満の乱数を返す。
--まず任意の乱数を発生させる
--乱数を`rand_max`で割った余り(0以上rand_max未満)を返す
+- まず任意の乱数を発生させる
+- 乱数を`rand_max`で割った余り(0以上rand_max未満)を返す
 
 ## print_board関数
 
