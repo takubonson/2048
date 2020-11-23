@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #define SIZE 4
 int random_in_range(int);
 void print_board(int [SIZE][SIZE]);
@@ -14,6 +15,7 @@ void move_right(int [SIZE][SIZE], int *);
 
 
 int main (int argc, char *argv[]) {
+    srand((unsigned)time(NULL));
     int board[SIZE][SIZE] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
     int score = 0;
     int c;
